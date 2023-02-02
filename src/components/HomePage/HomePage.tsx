@@ -18,7 +18,7 @@ export const HomePage = () => {
                 challenge your mind!
               </h1>
               <p className="mb-lg-3" style={{ opacity: 0.5, fontWeight: 400 }}>
-                'Mystery year' is a fun and educational game where players test
+                'Mystery Year' is a fun and educational game where players test
                 their knowledge of history by guessing the year a photo was
                 taken. Travel through time with every click.
               </p>
