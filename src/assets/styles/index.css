@@ -76,3 +76,11 @@ footer {
   margin-top: 40px;
   background: black;
 }
+
+img {
+}
+
+.AnimatedNumberItem__number {
+  font-family: "Tinos", Arial, sans-serif;
+  user-select: none;
+}

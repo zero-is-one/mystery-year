@@ -8,7 +8,7 @@ export const Footer = () => {
         <div className="row">
           <div className="col">About Us</div>
           <div className="col text-end ms-auto">
-            <small className="text-muted">©Myserty Year {year}</small>
+            <small className="text-muted">© Mystery Year {year}</small>
           </div>
         </div>
       </div>
