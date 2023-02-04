@@ -2,7 +2,7 @@ import sample1 from "assets/images/sample1.jpg";
 import sample2 from "assets/images/sample2.jpg";
 import sample3 from "assets/images/sample3.jpg";
 import sample4 from "assets/images/sample4.jpg";
-
+import { BsArrowRightShort, BsTrophyFill } from "react-icons/bs";
 const samples = [sample1, sample2, sample3, sample4];
 
 export const HomePage = () => {
@@ -10,7 +10,7 @@ export const HomePage = () => {
     <main>
       <section className="pt-5">
         <div className="container pt-md-5">
-          <div className="row justify-content-center">
+          <div className="row ">
             <div className="col-md-11 col-10 col-xl-8">
               <h1 className="mb-2">
                 Relive history one snap at a time -
@@ -28,20 +28,8 @@ export const HomePage = () => {
                   className="btn me-4 my-2 btn-lg btn-light"
                   style={{ minWidth: 260 }}
                 >
-                  Play The Game{" "}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-arrow-right"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                    ></path>
-                  </svg>
+                  Play The Game
+                  <BsArrowRightShort size={"2em"} />
                 </a>
 
                 <a
@@ -50,6 +38,7 @@ export const HomePage = () => {
                   style={{ minWidth: 260 }}
                 >
                   Daily Challenge
+                  <BsTrophyFill className="ms-2" size={"1.2em"} />
                 </a>
               </p>
             </div>
@@ -71,7 +60,37 @@ export const HomePage = () => {
           </div>
         </div>
       </section>
-      <hr />
+
+      <section className="pt-5">
+        <div className="container pt-md-5">
+          <div className="row justify-content-center">
+            <div className="col">
+              <h3
+                className="mb-3 d-inline-block py-2 px-3 mb-3"
+                style={{ background: "white", color: "black" }}
+              >
+                Frequently Asked Questions
+              </h3>
+              <h4 className="mb-1">Where do the photos come from?</h4>
+              <p>
+                The photos are sourced from the Library of Congress and the
+                Smithsonian Institution.
+              </p>
+              <h4 className="mb-1">Can I add photos to the site?</h4>
+              <p>Contact us at contact@mysteryyear.com</p>
+              <h4 className="mb-1">
+                Are there any age restrictions for playing the game?
+              </h4>
+              <p>
+                There are no specific age restrictions for playing the game, but
+                it is recommended for players who are 13 years of age or older.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 };
+
+//html bootstrap underline text code

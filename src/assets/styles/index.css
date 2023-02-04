@@ -2,6 +2,24 @@ body {
   background: #1d1e21;
 }
 
+body,
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+main {
+  flex-grow: 1;
+}
+
+footer {
+  min-height: 70px;
+  margin-top: 40px;
+  opacity: 0.2;
+}
+
 header {
   font-family: "Poppins", Arial, sans-serif;
 }
@@ -67,20 +85,48 @@ h1 {
   padding-right: 40px;
 }
 
-main {
-  min-height: calc(100vh - 176px);
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
 }
 
-footer {
-  min-height: 70px;
-  margin-top: 40px;
-  background: black;
+.viewer-container:not(.viewer-fixed) .viewer-fullscreen {
+  display: none;
 }
 
-img {
+.viewer-container.viewer-backdrop {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.viewer-button.viewer-fullscreen {
+  background: red;
+}
+
+.viewer-fullscreen-exit.viewer-button::before {
+  background-size: 260px;
 }
 
 .AnimatedNumberItem__number {
   font-family: "Tinos", Arial, sans-serif;
   user-select: none;
+  color: white;
+}
+
+.gradient-border {
+  --angle: to bottom;
+  --border-top-width: 0.15em;
+  --border-right-width: 0.15em;
+  --border-bottom-width: 0.15em;
+  --border-left-width: 0.15em;
+
+  border-width: 0;
+  border-style: solid;
+  border-top-width: var(--border-top-width);
+  border-right-width: var(--border-right-width);
+  border-bottom-width: var(--border-bottom-width);
+  border-left-width: var(--border-left-width);
+  border-image: linear-gradient(var(--angle), #40e0d0, #ff8c00, #ff0080) 1;
 }

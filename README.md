@@ -51,4 +51,4 @@ https://github.com/holger1411/klar-bootstrap-html-template/blob/main/index.html
 https://startbootstrap.com/previews/coming-soon
 https://preview.colorlib.com/#oraxol
 
-https://github.com/samvera-labs/clover-iiif
+https://stackoverflow.com/questions/25060186/how-to-extract-date-from-string-using-javascript
