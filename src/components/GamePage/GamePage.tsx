@@ -3,7 +3,7 @@ import { Viewer } from "./Viewer";
 import "viewerjs-react/dist/index.css";
 import "react-awesome-animated-number/dist/index.css";
 import testImg from "assets/images/test-image.jpg";
-import testImg2 from "assets/images/test-image2.jpg";
+//import testImg2 from "assets/images/test-image2.jpg";
 import AnimatedNumber from "react-awesome-animated-number";
 import { BsArrowRightShort } from "react-icons/bs";
 import { GiRoundStar } from "react-icons/gi";
@@ -28,7 +28,7 @@ export const GamePage = () => {
   const [totalPoints, setTotalPoints] = useState(0);
   const [rangeVal, setRangeVal] = useState<number>(1950);
 
-  const [imageUrl, setImageUrl] = useState<string>(testImg);
+  const [imageUrl] = useState<string>(testImg);
 
   const submitGuess = () => {
     const userGuess = rangeVal;

@@ -8,7 +8,6 @@ const maxYear = 2023;
 export const useSingleImageGameData = (targetYear: number) => {
   const [points, setPoints] = useState(0);
   const [guessYear, setGuessYear] = useState<number | undefined>();
-  const [solution, setSolution] = useState<number | undefined>();
 
   const color = getPercentColor(1 - points / maxPoints);
   const hasMadeGuess = !!guessYear;
@@ -29,7 +28,6 @@ export const useSingleImageGameData = (targetYear: number) => {
     points,
     color,
     hasMadeGuess,
-    solution,
     targetYear,
     guessYear,
   };
