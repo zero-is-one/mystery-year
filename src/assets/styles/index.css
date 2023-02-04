@@ -109,12 +109,6 @@ h1 {
   background-size: 260px;
 }
 
-.AnimatedNumberItem__number {
-  font-family: "Tinos", Arial, sans-serif;
-  user-select: none;
-  color: white;
-}
-
 .gradient-border {
   --angle: to bottom;
   --border-top-width: 0.15em;
@@ -129,4 +123,41 @@ h1 {
   border-bottom-width: var(--border-bottom-width);
   border-left-width: var(--border-left-width);
   border-image: linear-gradient(var(--angle), #40e0d0, #ff8c00, #ff0080) 1;
+}
+
+.game-large-number .AnimatedNumberItem__number {
+  font-family: "Tinos", Arial, sans-serif;
+  user-select: none;
+  color: white;
+}
+
+.game-info-card {
+  position: absolute;
+  z-index: 1;
+  background: black;
+  border: 1px solid #6c757d;
+  left: 0;
+  top: 0;
+  text-align: center;
+  padding: 8px;
+  margin: 8px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+.game-info-card small {
+  font-size: 11px;
+  display: block;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 1.2s linear infinite;
 }
