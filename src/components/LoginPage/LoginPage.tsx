@@ -1,4 +1,5 @@
-import merrygoroundImg from "assets/images/merrygoround.jpg";
+import img from "assets/images/police.jpg";
+import { BsFacebook, BsGoogle } from "react-icons/bs";
 
 export const LoginPage = () => {
   return (
@@ -7,7 +8,7 @@ export const LoginPage = () => {
         <div className="row d-flex align-items-center justify-content-center h-100">
           <div className="col-md-6 col-lg-5 col-xl-4">
             <img
-              src={merrygoroundImg}
+              src={img}
               className="img-fluid gradient-border"
               alt="Merry go round"
             />
@@ -55,11 +56,7 @@ export const LoginPage = () => {
                 <a href="#!">Forgot password?</a>
               </div>
 
-              <button
-                type="submit"
-                className="btn btn-primary btn-lg"
-                style={{ minWidth: 300 }}
-              >
+              <button type="submit" className="btn btn-primary btn-lg w-100">
                 Sign in
               </button>
 
@@ -72,15 +69,16 @@ export const LoginPage = () => {
                   href="#!"
                   role="button"
                 >
-                  <i className="fab fa-facebook-f me-2"></i>Continue with
-                  Facebook
+                  <BsFacebook className="me-2" />
+                  Continue with Facebook
                 </a>
                 <a
                   className="btn btn-outline-primary btn-lg btn-block"
                   href="#!"
                   role="button"
                 >
-                  <i className="fab fa-twitter me-2"></i>Continue with Twitter
+                  <BsGoogle className="me-2" />
+                  Continue with Google
                 </a>
               </div>
             </form>

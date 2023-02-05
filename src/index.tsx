@@ -5,12 +5,11 @@ import "assets/styles/theme.css";
 import "assets/styles/index.css";
 import { App } from "components/App/App";
 import reportWebVitals from "./reportWebVitals";
+import { getApp as getFirebaseApp } from "./firebase";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+getFirebaseApp();
 
-root.render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <App />

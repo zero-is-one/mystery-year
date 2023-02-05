@@ -10,10 +10,13 @@
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "firebase": "^9.17.1",
     "framer-motion": "^9.0.1",
     "react": "^18.2.0",
     "react-awesome-animated-number": "^1.0.9",
     "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
+    "react-hook-form": "^7.43.0",
     "react-icons": "^4.7.1",
     "react-range": "^1.8.14",
     "react-router-dom": "^6.8.0",
@@ -27,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy:firestore:rules": "firebase deploy --only firestore:rules"
   },
   "eslintConfig": {
     "extends": [
