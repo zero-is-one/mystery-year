@@ -31,7 +31,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy:firestore:rules": "firebase deploy --only firestore:rules"
+    "deploy:hosting": "npm run build && firebase deploy --only hosting",
+    "deploy:rules:firestore": "firebase deploy --only firestore:rules",
+    "deploy:rules:storage": "firebase deploy --only storage",
+    "deploy:cors:storage": "gsutil cors set storage-cors.json gs://mystery-year.appspot.com"
   },
   "eslintConfig": {
     "extends": [
