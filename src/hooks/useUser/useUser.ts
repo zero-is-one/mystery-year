@@ -19,8 +19,6 @@ export const useUser = () => {
     }
   );
 
-  console.log({ user, authUser, authLoading, loading, error });
-
   return {
     user: user as User,
     loading,

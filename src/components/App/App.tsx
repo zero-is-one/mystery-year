@@ -24,7 +24,7 @@ export const App = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="game" element={<GamePage />} />
+        <Route path="game/:id" element={<GamePage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignUpPage />} />
         <Route path="*" element={<NotFoundPage />} />

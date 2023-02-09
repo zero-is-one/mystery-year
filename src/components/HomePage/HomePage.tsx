@@ -7,8 +7,11 @@
 // const samples = [sample5, sample1, sample2, sample6, sample3, sample4, sample5];
 import { BsArrowRightShort, BsTrophyFill } from "react-icons/bs";
 import slides from "assets/images/slides.jpg";
+import { useGames } from "hooks/useGames/useGames";
 
 export const HomePage = () => {
+  const { start } = useGames();
+
   return (
     <main>
       <section
@@ -33,14 +36,14 @@ export const HomePage = () => {
                 taken. Travel through time with every click.
               </p>
               <p className="d-md-flex mt-4 text-center">
-                <a
-                  href="#dd"
+                <button
+                  onClick={start}
                   className="btn me-4 my-2 btn-lg btn-light"
                   style={{ minWidth: 260 }}
                 >
                   Play The Game
                   <BsArrowRightShort size={"2em"} />
-                </a>
+                </button>
 
                 <a
                   href="#helo"

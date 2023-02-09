@@ -5,7 +5,6 @@ import { useFirebaseAuth } from "hooks/useFirebase/useFirebase";
 export const Header = () => {
   const { authUser } = useUser();
   const auth = useFirebaseAuth();
-  console.log("ddfsf", authUser);
 
   return (
     <header>
