@@ -1,61 +1,52 @@
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useUser } from "hooks/useUser/useUser";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { useFirestore } from "hooks/useFirebase/useFirebase";
 import {
-  doc,
-  collection,
-  getDoc,
-  addDoc,
-  getCountFromServer,
-  query,
-  orderBy,
-  endAt,
-  limit,
-  where,
-  getDocs,
-  Timestamp,
-} from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
-import { useUser } from "hooks/useUser/useUser";
+  getFunctions,
+  httpsCallable,
+  //  connectFunctionsEmulator,
+} from "firebase/functions";
+import { Photo } from "types/Photo";
+import { YearGuess } from "types/YearGuess";
+const functions = getFunctions();
+// connectFunctionsEmulator(functions, "localhost", 5001);
+const createGame = httpsCallable(functions, "createGame");
 
 export const useGames = () => {
   const firestore = useFirestore();
-  const { authUser } = useUser();
   const navigate = useNavigate();
+  const { authUser } = useUser();
+  const [isLoadingNewGame, setIsLoadingNewGame] = useState(false);
 
   async function start() {
-    const photos = await Promise.all([
-      getRandomPhoto(),
-      getRandomPhoto(),
-      getRandomPhoto(),
-      getRandomPhoto(),
-      getRandomPhoto(),
-    ]);
-
-    console.log(authUser?.uid);
-
-    const snapshot = await addDoc(collection(firestore, "games"), {
-      photos,
-      userId: authUser?.uid,
-      createdAt: Timestamp.now(),
-    });
-
-    navigate(`/game/${snapshot.id}`);
+    setIsLoadingNewGame(true);
+    const r: any = await createGame();
+    navigate(`/${r.data.id}`);
   }
 
-  async function getRandomPhoto() {
-    const photosRef = collection(firestore, "photos");
-    const randomId = doc(collection(firestore, "random")).id;
+  async function complete(
+    gameId: string,
+    photos: Photo[],
+    guesses: YearGuess[]
+  ) {
+    if (!authUser) return;
 
-    const q = query(
-      photosRef,
-      orderBy("__name__"),
-      where("__name__", ">=", randomId),
-      limit(1)
+    const result = await addDoc(
+      collection(firestore, "users", authUser?.uid, "games"),
+      {
+        photos,
+        guesses,
+        gameId,
+        createdAt: Timestamp.now(),
+      }
     );
 
-    const querySnapshot = await getDocs(q);
+    navigate(`/result/${result?.id}`);
 
-    return querySnapshot.docs[0].data();
+    return result;
   }
 
-  return { start };
+  return { start, isLoadingNewGame, complete };
 };

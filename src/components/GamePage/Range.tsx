@@ -49,9 +49,9 @@ export const Range = ({
             height: "32px",
             width: "32px",
             borderRadius: "100px",
-            background:
-              "radial-gradient(ellipse at center,  #E1E1E1 0%,#E1E1E1 30%,#E1E1E1 30%,transparent 30%,transparent 30%), linear-gradient(to bottom, #f5f5f5 0%, #cccccc 100%)",
-            boxShadow: "inset 0 0 10px 0px #aaa, 0 2px 3px #555",
+            background: "#0D6EFD",
+            boxShadow: "inset 0 0 10px 0px #1158c4, 0 2px 3px #3b3b3b",
+            border: "1px solid #BCBCBC",
           }}
         />
       )}

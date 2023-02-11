@@ -1,66 +1,69 @@
 import { useState } from "react";
 import { Viewer } from "./Viewer";
-import "viewerjs-react/dist/index.css";
-import "react-awesome-animated-number/dist/index.css";
-import testImg from "assets/images/test-image.jpg";
-//import testImg2 from "assets/images/test-image2.jpg";
+
 import AnimatedNumber from "react-awesome-animated-number";
 import { BsArrowRightShort } from "react-icons/bs";
+import { FaImages, FaTrophy } from "react-icons/fa";
 import { GiRoundStar } from "react-icons/gi";
 import { animate, motion, AnimatePresence } from "framer-motion";
 import { Range } from "./Range";
 import { CaretSelector } from "./CaretSelector";
 import { Scope } from "./Scope";
-import { useSingleImageGameData } from "hooks/useSingleImageGameData/useSingleImageGameData";
+
+const minYear = 1900;
+const maxYear = 2023;
 
 export const SimgleGameImage = ({
-  year,
+  gameId,
+  targetYear,
   totalPoints,
   onSubmit,
   onNext,
   imgUrl,
+  roundTotal,
+  photoIndex,
 }: {
-  year: number;
+  gameId: string;
+  targetYear: number;
   totalPoints: number;
-  onSubmit: (points: number) => void;
+  onSubmit: (userGuess: number, targetYear: number) => number;
   onNext: () => void;
   imgUrl: string;
+  photoIndex: number;
+  roundTotal: number;
 }) => {
-  const {
-    makeGuess,
-    minYear,
-    maxYear,
-    points,
-    guessYear,
-    targetYear,
-    hasMadeGuess,
-    color: guessPointColor,
-  } = useSingleImageGameData(year);
-
+  const [guessYear, setGuessYear] = useState<number | undefined>();
+  const [points, setPoints] = useState<number | undefined>();
   const [rangeVal, setRangeVal] = useState<number>(1950);
 
   const submitGuess = () => {
     const userGuess = rangeVal;
+    setGuessYear(userGuess);
+
     animate(userGuess, targetYear, {
       duration: 0.2,
       onUpdate: (latest) => setRangeVal(Math.floor(latest)),
     });
-    const points = makeGuess(userGuess);
 
-    onSubmit(points);
+    setPoints(onSubmit(userGuess, targetYear));
   };
+
+  const guessPointColor = getPercentColor(
+    Math.abs((guessYear || 0) - targetYear) / 48
+  );
 
   return (
     <div>
       <div className="" style={{ position: "relative" }}>
         <div className="game-info-card" style={{ right: 0, left: "auto" }}>
           <small>Points</small>
-
           <AnimatedNumber value={totalPoints} duration={100} size={16} />
         </div>
         <div className="game-info-card">
           <small>Round</small>
-          <p className="m-0">1 / 5</p>
+          <p className="m-0">
+            {photoIndex + 1} / {roundTotal}
+          </p>
         </div>
       </div>
 
@@ -75,9 +78,9 @@ export const SimgleGameImage = ({
               exit={{ opacity: 0 }}
               className="me-4"
               transition={{ duration: 0.3 }}
-              key={hasMadeGuess ? "yes" : "no"}
+              key={guessYear ? "yes" : "no"}
             >
-              {hasMadeGuess
+              {guessYear
                 ? `This photo was taken on:`
                 : `When was this photo taken?`}
             </motion.p>
@@ -94,7 +97,7 @@ export const SimgleGameImage = ({
         </div>
         <div style={{ width: "33%" }}>
           <AnimatePresence mode="wait">
-            {!hasMadeGuess && (
+            {!guessYear && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -106,7 +109,7 @@ export const SimgleGameImage = ({
               </motion.div>
             )}
 
-            {hasMadeGuess && (
+            {guessYear && (
               <AnimatePresence mode="wait">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -133,7 +136,7 @@ export const SimgleGameImage = ({
         setValue={setRangeVal}
         minValue={minYear}
         maxValue={maxYear}
-        disabled={hasMadeGuess}
+        disabled={!!guessYear}
       />
       <Scope
         minValue={minYear}
@@ -143,11 +146,18 @@ export const SimgleGameImage = ({
         rangeLabel={`${guessYear}`}
       />
 
-      <div className="d-flex align-items-center justify-content-center">
+      <div className="d-flex align-items-center justify-content-between">
+        <div style={{ width: 190, position: "relative" }}>
+          <small style={{ opacity: 0.5 }}>Share this game session:</small>
+          <br />
+          <strong>
+            {window.location.host + window.location.pathname.toUpperCase()}
+          </strong>
+        </div>
         {!guessYear && (
           <button
-            className="btn me-4 my-2 btn-lg btn-primary d-flex align-items-center justify-content-center"
-            style={{ minWidth: 260 }}
+            className="btn mx-2 my-2 btn-lg btn-primary d-flex align-items-center justify-content-center"
+            style={{ width: 280 }}
             onClick={submitGuess}
           >
             Make A Guess
@@ -156,17 +166,34 @@ export const SimgleGameImage = ({
         )}{" "}
         {guessYear && (
           <button
-            className="btn me-4 my-2 btn-lg btn-secondary d-flex align-items-center justify-content-center"
-            style={{ minWidth: 260 }}
+            className="btn mx-2 my-2 btn-lg btn-secondary d-flex align-items-center justify-content-center"
+            style={{ width: 280 }}
             onClick={() => {
               onNext();
             }}
           >
-            Next Image
-            <BsArrowRightShort size={"2em"} />
+            {photoIndex + 1 === 5 && (
+              <>
+                See Results
+                <FaTrophy size={"1em"} className="ms-2" />
+              </>
+            )}
+
+            {photoIndex + 1 !== 5 && (
+              <>
+                Next Image
+                <FaImages size={"1em"} className="ms-2" />
+              </>
+            )}
           </button>
         )}
+        <div style={{ width: 190 }}></div>
       </div>
     </div>
   );
 };
+
+function getPercentColor(value: number) {
+  var hue = ((1 - value) * 120).toString(10);
+  return ["hsl(", hue, ",100%,50%)"].join("");
+}

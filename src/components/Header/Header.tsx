@@ -1,7 +1,7 @@
 import { useUser } from "hooks/useUser/useUser";
 import { signOut } from "firebase/auth";
 import { useFirebaseAuth } from "hooks/useFirebase/useFirebase";
-
+import { RiAccountCircleFill } from "react-icons/ri";
 export const Header = () => {
   const { authUser } = useUser();
   const auth = useFirebaseAuth();
@@ -14,23 +14,7 @@ export const Header = () => {
             <span className="">[[ Mystery Year ]]</span>
           </a>
           <div>
-            {authUser && !authUser?.isAnonymous && (
-              <span
-                onClick={() => {
-                  signOut(auth);
-                }}
-              >
-                Welcom {authUser.uid}
-              </span>
-            )}
-            {authUser && authUser?.isAnonymous && (
-              <div>
-                <a href="/signup">Sign Up</a>
-                <a className="btn btn-secondary ms-3" href="/login">
-                  Already have an account?
-                </a>
-              </div>
-            )}
+            <RiAccountCircleFill size={32} />
           </div>
         </div>
       </nav>

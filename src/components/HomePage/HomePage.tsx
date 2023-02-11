@@ -10,7 +10,7 @@ import slides from "assets/images/slides.jpg";
 import { useGames } from "hooks/useGames/useGames";
 
 export const HomePage = () => {
-  const { start } = useGames();
+  const { start, isLoadingNewGame } = useGames();
 
   return (
     <main>
@@ -42,7 +42,19 @@ export const HomePage = () => {
                   style={{ minWidth: 260 }}
                 >
                   Play The Game
-                  <BsArrowRightShort size={"2em"} />
+                  <div
+                    style={{ width: 28, height: 28, display: "inline-block" }}
+                  >
+                    {isLoadingNewGame && (
+                      <div
+                        className="spinner-border spinner-border-sm ms-1 my-1"
+                        role="status"
+                      >
+                        <span className="sr-only d-none">Loading...</span>
+                      </div>
+                    )}
+                    {!isLoadingNewGame && <BsArrowRightShort size={"2em"} />}
+                  </div>
                 </button>
 
                 <a

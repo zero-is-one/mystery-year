@@ -16,7 +16,14 @@ export const Scope = ({
   const interval = window.innerWidth < 700 ? 20 : 10;
 
   return (
-    <div style={{ position: "relative", userSelect: "none", height: 60 }}>
+    <div
+      style={{
+        position: "relative",
+        userSelect: "none",
+        height: 60,
+        zIndex: -1,
+      }}
+    >
       {[...Array(Math.floor((maxValue - minValue) / interval))].map((_, i) => {
         const val = minValue + i * interval;
 

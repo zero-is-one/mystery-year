@@ -4,26 +4,41 @@ import { useParams } from "react-router-dom";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { doc } from "firebase/firestore";
 import { useFirestore } from "hooks/useFirebase/useFirebase";
-import { animate, motion, AnimatePresence } from "framer-motion";
-
+import { motion, AnimatePresence } from "framer-motion";
+import { YearGuess } from "types/YearGuess";
+import { useGames } from "hooks/useGames/useGames";
 const imageUrlHost =
   "https://firebasestorage.googleapis.com/v0/b/mystery-year.appspot.com/o/images%2F";
 
 export const GamePage = () => {
-  let { id } = useParams();
+  const { complete } = useGames();
+  const { gameId } = useParams();
   const firestore = useFirestore();
   const [gameData, loading, error] = useDocumentData(
-    id ? doc(firestore, "games", id) : null
+    gameId ? doc(firestore, "games", gameId.toLowerCase()) : null
   );
 
   const [photoIndex, setPhotoIndex] = useState(0);
-  const [totalPoints, setTotalPoints] = useState(0);
+  const [guesses, setGuesses] = useState<YearGuess[]>([]);
+  const totalPoints = guesses.reduce((acc, guess) => acc + guess.points, 0);
 
-  const onSubmit = (points: number) => {
-    setTotalPoints(totalPoints + points);
+  const onSubmit = (guessYear: number, targetYear: number) => {
+    const maxYearsOff = 48;
+    const maxPoints = 5000;
+
+    const yearsOff = Math.abs((guessYear || 0) - (targetYear || 0));
+    const yearPoints = Math.max(maxYearsOff - yearsOff, 0);
+    const points = Math.floor((yearPoints / maxYearsOff) * maxPoints);
+
+    setGuesses([...guesses, { year: guessYear, points }]);
+
+    return points;
   };
 
-  const onNext = () => {
+  const onNext = async () => {
+    if (photoIndex >= 4) {
+      return await complete(gameId || "", gameData?.photos, guesses);
+    }
     setPhotoIndex(photoIndex + 1);
   };
 
@@ -36,42 +51,27 @@ export const GamePage = () => {
   return (
     <>
       <main>
-        {photoIndex < 5 && (
-          <div className="container">
-            <AnimatePresence mode="wait">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                key={photoIndex}
-              >
-                <SimgleGameImage
-                  year={photo.year}
-                  totalPoints={totalPoints}
-                  onSubmit={onSubmit}
-                  onNext={onNext}
-                  imgUrl={`${imageUrlHost}${photo.imageId}?alt=media`}
-                />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        )}
-
-        {photoIndex >= 5 && (
-          <div className="container">
-            <h1>Game Over</h1>
-            <p>You scored {totalPoints} points</p>
-            {gameData?.photos.map((photo: any) => (
-              <div>
-                <img
-                  width={100}
-                  src={`${imageUrlHost}${photo.imageId}?alt=media`}
-                  alt={photo.title}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+        <div className="container" style={{ position: "relative" }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              key={photoIndex}
+            >
+              <SimgleGameImage
+                gameId={gameId || ""}
+                photoIndex={photoIndex}
+                roundTotal={gameData?.photos.length || 1}
+                targetYear={photo.year}
+                totalPoints={totalPoints}
+                onSubmit={onSubmit}
+                onNext={onNext}
+                imgUrl={`${imageUrlHost}${photo.imageId}?alt=media`}
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </main>
     </>
   );

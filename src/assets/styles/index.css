@@ -161,3 +161,8 @@ h1 {
 .spin {
   animation: spin 1.2s linear infinite;
 }
+
+.share > div {
+  max-width: 668px;
+  min-width: 250px;
+}
