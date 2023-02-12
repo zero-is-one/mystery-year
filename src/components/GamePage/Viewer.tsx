@@ -54,7 +54,7 @@ export const Viewer = React.memo(({ imageUrl }: { imageUrl: string }) => {
         >
           <BsFullscreen />
         </button>
-        <Flag />
+        <Flag imageUrl={imageUrl} />
       </div>
     </>
   );

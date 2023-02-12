@@ -22,5 +22,10 @@ service cloud.firestore {
     match /photos/{userId} {
       allow read: if true;
     }
+
+    match /flags/{flagId} {
+      allow create: if request.auth.uid == request.resource.data.userId
+      allow read, update, delete: if false
+    }
   }
 }

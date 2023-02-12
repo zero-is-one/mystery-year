@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { SimgleGameImage } from "./SingleGameImage";
 import { useParams } from "react-router-dom";
-import { useDocumentData } from "react-firebase-hooks/firestore";
+import {
+  useDocumentData,
+  useDocumentDataOnce,
+} from "react-firebase-hooks/firestore";
 import { doc } from "firebase/firestore";
 import { useFirestore } from "hooks/useFirebase/useFirebase";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,7 +17,7 @@ export const GamePage = () => {
   const { complete } = useGames();
   const { gameId } = useParams();
   const firestore = useFirestore();
-  const [gameData, loading, error] = useDocumentData(
+  const [gameData, loading, error] = useDocumentDataOnce(
     gameId ? doc(firestore, "games", gameId.toLowerCase()) : null
   );
 
@@ -44,9 +47,30 @@ export const GamePage = () => {
 
   const photo = gameData?.photos[photoIndex];
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-  if (!gameData && !loading) return <div>Game not found</div>;
+  if (loading) return <div className="container text-center">Loading...</div>;
+  if (error)
+    return (
+      <div className="container">
+        <h1>Error</h1>
+        <p>{error.message}</p>
+        <p>
+          Contact contact@mysteryyear.com if you beleive you should of not
+          revieved this error.
+        </p>
+      </div>
+    );
+  if (!gameData && !loading)
+    return (
+      <div className="container text-center d-flex-lg align-items-center justify-content-center">
+        <h2 className="my-2">Game not found.</h2>
+        <img
+          className="my-2"
+          width="400"
+          src="https://firebasestorage.googleapis.com/v0/b/mystery-year.appspot.com/o/images%2F019aed9388b9cd9098308478c5c7b81a.jpg?alt=media"
+          alt="Two people playing a game of chess"
+        />
+      </div>
+    );
 
   return (
     <>
@@ -60,7 +84,7 @@ export const GamePage = () => {
               key={photoIndex}
             >
               <SimgleGameImage
-                gameId={gameId || ""}
+                photo={photo}
                 photoIndex={photoIndex}
                 roundTotal={gameData?.photos.length || 1}
                 targetYear={photo.year}

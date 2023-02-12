@@ -9,12 +9,12 @@ import { animate, motion, AnimatePresence } from "framer-motion";
 import { Range } from "./Range";
 import { CaretSelector } from "./CaretSelector";
 import { Scope } from "./Scope";
+import { Photo } from "types/Photo";
 
 const minYear = 1900;
 const maxYear = 2023;
 
 export const SimgleGameImage = ({
-  gameId,
   targetYear,
   totalPoints,
   onSubmit,
@@ -22,13 +22,14 @@ export const SimgleGameImage = ({
   imgUrl,
   roundTotal,
   photoIndex,
+  photo,
 }: {
-  gameId: string;
   targetYear: number;
   totalPoints: number;
   onSubmit: (userGuess: number, targetYear: number) => number;
   onNext: () => void;
   imgUrl: string;
+  photo: Photo;
   photoIndex: number;
   roundTotal: number;
 }) => {
@@ -67,7 +68,37 @@ export const SimgleGameImage = ({
         </div>
       </div>
 
-      <Viewer imageUrl={imgUrl} />
+      <div style={{ position: "relative" }}>
+        <Viewer imageUrl={imgUrl} />
+
+        <AnimatePresence mode="wait">
+          {guessYear && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              style={{
+                position: "absolute",
+                bottom: 10,
+                left: 60,
+                display: "block",
+                padding: 20,
+                width: "calc(100% - 120px)",
+                background: "#000000cc",
+                border: "1px solid #6c757d",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                borderRadius: 4,
+                boxShadow: "0 0 10px 0 #000000cc",
+                color: "white",
+              }}
+              className="text-expand"
+            >
+              {photo.title}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       <div className="d-flex justify-content-end align-items-center">
         <div>

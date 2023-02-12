@@ -4,25 +4,24 @@
 // import sample4 from "assets/images/sample4.jpg";
 // import sample5 from "assets/images/sample5.jpg";
 // import sample6 from "assets/images/sample6.jpg";
+import swipe from "assets/images/swipe.jpg";
 // const samples = [sample5, sample1, sample2, sample6, sample3, sample4, sample5];
-import { BsArrowRightShort, BsTrophyFill } from "react-icons/bs";
-import slides from "assets/images/slides.jpg";
+import { BsArrowRightShort } from "react-icons/bs";
+import { FaMedal } from "react-icons/fa";
+
 import { useGames } from "hooks/useGames/useGames";
+import { Categories } from "./Categories";
 
 export const HomePage = () => {
   const { start, isLoadingNewGame } = useGames();
 
   return (
     <main>
-      <section
-        className="pt-5 mb-4"
-        style={{
-          background: `url(${slides}) bottom center repeat-x`,
-          paddingBottom: 246,
-          imageRendering: "pixelated",
-        }}
-      >
-        <div className="container pt-md-5">
+      <section className="py-3">
+        <div
+          className="container pt-md-5"
+          style={{ background: `url(${swipe}) right center no-repeat` }}
+        >
           <div className="row ">
             <div className="col-md-11 col-10 col-xl-8 mb-4">
               <h1 className="mb-2">
@@ -38,7 +37,7 @@ export const HomePage = () => {
               <p className="d-md-flex mt-4 text-center">
                 <button
                   onClick={start}
-                  className="btn me-4 my-2 btn-lg btn-light"
+                  className="btn me-4 my-2 btn-lg btn-primary"
                   style={{ minWidth: 260 }}
                 >
                   Play The Game
@@ -63,7 +62,7 @@ export const HomePage = () => {
                   style={{ minWidth: 260 }}
                 >
                   Daily Challenge
-                  <BsTrophyFill className="ms-2" size={"1.2em"} />
+                  <FaMedal className="ms-2" size={"1.2em"} />
                 </a>
               </p>
             </div>
@@ -85,6 +84,8 @@ export const HomePage = () => {
           </div>
         </div> */}
       </section>
+
+      <Categories />
 
       <section className="mb-5">
         <div className="container pt-md-5">

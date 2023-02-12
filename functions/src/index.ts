@@ -46,6 +46,7 @@ export const createGame = functions.https.onCall(async (data, context) => {
 
   await admin.firestore().collection("games").doc(id).set({
     photos,
+    type: "all",
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
     createdBy: context.auth.uid,
   });
@@ -58,6 +59,7 @@ export const createGame = functions.https.onCall(async (data, context) => {
 
 const getRandomPhoto = async () => {
   const uid = generateRandomId();
+  console.log("UID", uid);
   const photosCollection = admin.firestore().collection("photos");
   const randomQueryRef = await photosCollection
     .where("__name__", ">=", uid)

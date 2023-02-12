@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { BsFlagFill } from "react-icons/bs";
 import { AiOutlineFileDone } from "react-icons/ai";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { useFirestore } from "hooks/useFirebase/useFirebase";
+import { useUser } from "hooks/useUser/useUser";
+import { Photo } from "types/Photo";
 
-export const Flag = () => {
+export const Flag = ({ imageUrl }: { imageUrl: string }) => {
   const [dialogVisible, setDialogVisible] = useState<boolean>(false);
-  const [reportSent, setReportSent] = useState<boolean>(false);
+  const [reason, setReason] = useState<string>("");
+  const firestore = useFirestore();
+  const { authUser } = useUser();
 
   const reasonsForReporting = [
     "Not a photo",
@@ -15,11 +21,28 @@ export const Flag = () => {
     "Other",
   ];
 
+  const onClick = (reason: string) => {
+    setDialogVisible(false);
+    setReason(reason);
+    let text = "None";
+    if (reason === "Other") {
+      text = prompt("Please enter the reason for reporting this photo") || "";
+    }
+
+    addDoc(collection(firestore, "flags"), {
+      createdAt: Timestamp.now(),
+      reason,
+      text,
+      userId: authUser?.uid,
+      imageUrl,
+    });
+  };
+
   return (
     <>
       <button
         className={`btn btn-${
-          reportSent ? "info" : "secondary"
+          reason ? "info" : "secondary"
         } d-flex justify-content-center align-items-center`}
         style={{
           width: 40,
@@ -33,7 +56,7 @@ export const Flag = () => {
           setDialogVisible(!dialogVisible);
         }}
       >
-        {reportSent ? (
+        {reason ? (
           <AiOutlineFileDone size={"1.6em"} />
         ) : (
           <BsFlagFill size={"1em"} />
@@ -54,17 +77,16 @@ export const Flag = () => {
           }}
         >
           <h6 className="text-secondary">What would you like to report?</h6>
-          {reasonsForReporting.map((reason) => (
+          {reasonsForReporting.map((reportReason) => (
             <button
-              key={reason}
+              key={reportReason}
               type="button"
-              className="btn btn-secondary btn-sm my-1 me-1"
-              onClick={() => {
-                setDialogVisible(!dialogVisible);
-                setReportSent(true);
-              }}
+              className={`btn btn-${
+                reason === reportReason ? "primary" : "secondary"
+              } btn-sm my-1 me-1"`}
+              onClick={() => onClick(reportReason)}
             >
-              {reason}
+              {reportReason}
             </button>
           ))}
         </div>

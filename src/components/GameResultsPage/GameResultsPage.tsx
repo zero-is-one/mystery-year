@@ -1,6 +1,6 @@
 import AnimatedNumber from "react-awesome-animated-number";
 import { PhotoSetting } from "types/Photo";
-import { useDocumentData } from "react-firebase-hooks/firestore";
+import { useDocumentDataOnce } from "react-firebase-hooks/firestore";
 import { useUser } from "hooks/useUser/useUser";
 import { doc } from "firebase/firestore";
 import { useFirestore } from "hooks/useFirebase/useFirebase";
@@ -11,7 +11,7 @@ export const GameResultsPage = () => {
   const { gameResultId } = useParams();
   const { authUser } = useUser();
   const firestore = useFirestore();
-  const [gameResult, loading, error] = useDocumentData(
+  const [gameResult, loading, error] = useDocumentDataOnce(
     gameResultId && authUser?.uid
       ? doc(firestore, "users", authUser?.uid, "games", gameResultId)
       : null
