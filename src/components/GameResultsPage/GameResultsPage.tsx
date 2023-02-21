@@ -44,7 +44,7 @@ export const GameResultsPage = () => {
               fontSize: 48,
               marginLeft: 10,
               color: "white",
-              textDecoration: "underline",
+              fontStyle: "italic",
             }}
           >
             points
@@ -64,7 +64,7 @@ export const GameResultsPage = () => {
 
       <div className="row justify-content-md-center">
         {(gameResult?.photos || []).map((photo: any, index: number) => (
-          <div className="col-6 col-md-4 col-lg-4 my-3">
+          <div className="col-12 col-md-4 col-lg-4 my-3">
             <div className="card h-100" style={{ position: "relative" }}>
               <div className="game-info-card">
                 <small>Year</small>

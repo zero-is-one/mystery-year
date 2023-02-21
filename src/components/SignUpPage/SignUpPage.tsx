@@ -1,8 +1,15 @@
-import img from "assets/images/merrygoround.jpg";
-//import { BsFacebook, BsGoogle } from "react-icons/bs";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useFirebaseAuth } from "hooks/useFirebase/useFirebase";
+import {
+  linkWithCredential,
+  getAuth,
+  signOut,
+  EmailAuthProvider,
+  User,
+} from "firebase/auth";
+
+import { useNavigate } from "react-router-dom";
+import img from "assets/images/merrygoround.jpg";
 
 export const SignUpPage = () => {
   const {
@@ -11,13 +18,21 @@ export const SignUpPage = () => {
     getValues,
     formState: { errors: formErrors },
   } = useForm();
-  const [createUserWithEmailAndPassword, user, loading, firebaseError] =
-    useCreateUserWithEmailAndPassword(useFirebaseAuth());
+  const navigate = useNavigate();
+  const [firebaseError, setFirebaseError] = useState<string | null>(null);
 
-  console.log(formErrors);
-
-  const onSubmit = (data: any) => {
-    createUserWithEmailAndPassword(data.email, data.password);
+  const onSubmit = async (data: any) => {
+    //await createUserWithEmailAndPassword(data.email, data.password);
+    const credential = EmailAuthProvider.credential(data.email, data.password);
+    linkWithCredential(getAuth().currentUser as User, credential)
+      .then((usercred) => {
+        const user = usercred.user;
+        console.log("Account linking success", user);
+        navigate("/account");
+      })
+      .catch((error) => {
+        setFirebaseError(error.message);
+      });
   };
 
   return (
@@ -31,7 +46,7 @@ export const SignUpPage = () => {
               alt="Merry go round"
             />
           </div>
-          <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 my-2">
+          <div className="col-md-7 col-lg-5 col-xl-5 my-2">
             <form onSubmit={handleSubmit(onSubmit)}>
               <label className="form-label mb-2" htmlFor="email">
                 Email address
@@ -86,8 +101,7 @@ export const SignUpPage = () => {
                 className="text-danger"
                 style={{ opacity: firebaseError ? 1 : 0 }}
               >
-                {messages[firebaseError?.code || ""] ||
-                  `Failed with error code: ${firebaseError?.code}`}
+                {firebaseError}
               </p>
 
               {/* <div className="divider d-flex align-items-center my-4">

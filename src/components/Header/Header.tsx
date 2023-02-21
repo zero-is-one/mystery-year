@@ -11,16 +11,24 @@ export const Header = () => {
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark ">
         <div className="container-xl">
-          <a className="navbar-brand d-flex align-items-center" href="/">
+          <Link className="navbar-brand d-flex align-items-center" to="/">
             <span className="">[[ Mystery Year ]]</span>
-          </a>
+          </Link>
           <div className="d-flex align-items-center">
-            <Link className="me-3" to={"/login"}>
-              Login
-            </Link>
-            <Link className="btn btn-outline-secondary btn-sm" to={"/account"}>
+            {authUser?.isAnonymous && (
+              <>
+                <Link to={"/login"}>
+                  <span className="d-none d-md-inline">
+                    Already have an account?
+                  </span>
+                  <span className="d-inline d-md-none">Login</span>
+                </Link>
+                <span className="mx-3"> |</span>
+              </>
+            )}
+
+            <Link className="" to={"/account"}>
               <RiAccountCircleFill size={32} />
-              <span className="mx-2">Profile</span>
             </Link>
           </div>
         </div>

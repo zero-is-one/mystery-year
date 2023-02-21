@@ -13,7 +13,7 @@ export const LoginPage = () => {
               alt="Merry go round"
             />
           </div>
-          <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1 my-2">
+          <div className="col-md-7 col-lg-5 col-xl-5 my-2">
             <form>
               <div className="form-outline mb-4">
                 {" "}
@@ -60,7 +60,7 @@ export const LoginPage = () => {
                 Sign in
               </button>
 
-              <div className="divider d-flex align-items-center my-4">
+              {/* <div className="divider d-flex align-items-center my-4">
                 <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
               </div>
               <div className="d-grid gap-2">
@@ -80,7 +80,7 @@ export const LoginPage = () => {
                   <BsGoogle className="me-2" />
                   Continue with Google
                 </a>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>

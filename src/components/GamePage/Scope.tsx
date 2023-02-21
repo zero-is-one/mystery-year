@@ -13,7 +13,7 @@ export const Scope = ({
   rangeColor: string;
   rangeLabel?: string;
 }) => {
-  const interval = window.innerWidth < 700 ? 20 : 10;
+  const interval = window.innerWidth < 800 ? 20 : 10;
 
   return (
     <div

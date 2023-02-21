@@ -100,16 +100,17 @@ export const SimgleGameImage = ({
         </AnimatePresence>
       </div>
 
-      <div className="d-flex justify-content-end align-items-center">
-        <div>
+      <div className="d-lg-flex justify-content-center align-items-center">
+        <div style={{ flex: 1 }}>
           <AnimatePresence mode="wait">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="me-4"
+              className="me-lg-4 my-2 text-center text-lg-end"
               transition={{ duration: 0.3 }}
               key={guessYear ? "yes" : "no"}
+              style={{ fontSize: 18 }}
             >
               {guessYear
                 ? `This photo was taken on:`
@@ -117,7 +118,8 @@ export const SimgleGameImage = ({
             </motion.p>
           </AnimatePresence>
         </div>
-        <div>
+        <div className="d-flex justify-content-center align-items-center">
+          <div style={{ flex: 1 }}></div>
           <AnimatedNumber
             className="game-large-number"
             value={rangeVal}
@@ -125,16 +127,28 @@ export const SimgleGameImage = ({
             hasComma={false}
             size={96}
           />
+
+          {/* mobile caret selector */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: guessYear ? 0 : 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{ flex: 1 }}
+            className="d-block d-lg-none"
+          >
+            <CaretSelector value={rangeVal} setValue={setRangeVal} />
+          </motion.div>
         </div>
-        <div style={{ width: "33%" }}>
+        <div style={{ flex: 1, minHeight: 36 }}>
           <AnimatePresence mode="wait">
             {!guessYear && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="me-4"
                 transition={{ duration: 0.3 }}
+                className="d-none d-lg-block"
               >
                 <CaretSelector value={rangeVal} setValue={setRangeVal} />
               </motion.div>
@@ -146,7 +160,7 @@ export const SimgleGameImage = ({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="ms-4"
+                  className="mx-4 text-center text-lg-start"
                   transition={{ duration: 0.3 }}
                 >
                   {targetYear === guessYear && (
@@ -162,6 +176,7 @@ export const SimgleGameImage = ({
           </AnimatePresence>
         </div>
       </div>
+
       <Range
         value={rangeVal}
         setValue={setRangeVal}
@@ -178,16 +193,18 @@ export const SimgleGameImage = ({
       />
 
       <div className="d-flex align-items-center justify-content-between">
-        <div style={{ width: 190, position: "relative" }}>
-          <small style={{ opacity: 0.5 }}>Share this game session:</small>
-          <br />
-          <strong>
-            {window.location.host + window.location.pathname.toUpperCase()}
-          </strong>
+        <div style={{ position: "relative", flex: 1 }}>
+          <div className="d-none d-lg-block">
+            <small style={{ opacity: 0.5 }}>Share this game session:</small>
+            <br />
+            <strong>
+              {window.location.host + window.location.pathname.toUpperCase()}
+            </strong>
+          </div>
         </div>
         {!guessYear && (
           <button
-            className="btn mx-2 my-2 btn-lg btn-primary d-flex align-items-center justify-content-center"
+            className="btn mx-2 my-2 btn-lg btn-primary d-flex align-items-center justify-content-center "
             style={{ width: 280 }}
             onClick={submitGuess}
           >
@@ -218,7 +235,7 @@ export const SimgleGameImage = ({
             )}
           </button>
         )}
-        <div style={{ width: 190 }}></div>
+        <div style={{ flex: 1 }}></div>
       </div>
     </div>
   );

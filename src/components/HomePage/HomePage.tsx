@@ -17,18 +17,11 @@ export const HomePage = () => {
 
   return (
     <main>
-      <section className="py-3">
-        <div
-          className="container pt-md-5"
-          style={{ background: `url(${swipe}) right center no-repeat` }}
-        >
+      <section className="my-5">
+        <div className="container">
           <div className="row ">
-            <div className="col-md-11 col-10 col-xl-8 mb-4">
-              <h1 className="mb-2">
-                Relive history one snap at a time -
-                <br className="d-sm-none d-md-block" /> guess the year,
-                challenge your mind!
-              </h1>
+            <div className="col-12 col-xl-7 col-lg-10">
+              <h1 className="mb-2">Relive history one snap at a time...</h1>
               <p className="mb-lg-3" style={{ opacity: 0.5, fontWeight: 400 }}>
                 'Mystery Year' is a fun and educational game where players test
                 their knowledge of history by guessing the year a photo was
@@ -65,6 +58,15 @@ export const HomePage = () => {
                   <FaMedal className="ms-2" size={"1.2em"} />
                 </a>
               </p>
+            </div>
+            <div className="d-none d-xl-block col-xl-5">
+              <div
+                style={{
+                  background: `url(${swipe}) right center no-repeat`,
+                  width: "100%",
+                  height: "100%",
+                }}
+              ></div>
             </div>
           </div>
         </div>

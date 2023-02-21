@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 import { useUser } from "hooks/useUser/useUser";
 import { useFirestore } from "hooks/useFirebase/useFirebase";
+import { BiRefresh } from "react-icons/bi";
 
 const matchesCount = 10;
 
@@ -80,7 +81,7 @@ export const Matches = () => {
             setLastVisible(Timestamp.now());
           }}
         >
-          Reset
+          <BiRefresh size={32} />
         </button>
       </div>
     </div>
