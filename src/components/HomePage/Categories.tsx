@@ -1,11 +1,20 @@
-import sample5 from "assets/images/sample5.jpg";
+import { PlayGameButton } from "components/PlayGameButton/PlayGameButton";
+import { BsArrowRightShort } from "react-icons/bs";
 import slides from "assets/images/slides.jpg";
+import africanamercans from "assets/images/africanamericans.jpg";
+import newyork from "assets/images/nyc.jpg";
+import worldwar from "assets/images/worldwar.jpg";
+import ethnography from "assets/images/ethonography.jpg";
 
 const categories = [
-  { title: "New York" },
-  { title: "New York" },
-  { title: "New York" },
-  { title: "New York" },
+  { title: "New York", subject: "new york", image: newyork },
+  {
+    title: "African Americans",
+    subject: "african americans",
+    image: africanamercans,
+  },
+  { title: "World War", subject: "world war", image: worldwar },
+  { title: "Ethnography", subject: "ethnography", image: ethnography },
 ];
 
 export const Categories = () => {
@@ -26,12 +35,21 @@ export const Categories = () => {
           {categories.map((c) => (
             <div className="col col-6 col-xl-3 mb-4">
               <div className="card">
-                <img src={sample5} className="card-img-top" alt="..." />
+                <img
+                  style={{ aspectRatio: "4/3", objectFit: "cover" }}
+                  src={c.image}
+                  className="card-img-top"
+                  alt="..."
+                />
                 <div className="card-body text-center">
                   <h5>{c.title}</h5>
-                  <button className="btn btn-light" style={{ width: 100 }}>
-                    Play
-                  </button>
+
+                  <PlayGameButton
+                    subject={c.subject}
+                    className="btn btn-light"
+                    style={{ width: 100 }}
+                    Icon={BsArrowRightShort}
+                  />
                 </div>
               </div>
             </div>

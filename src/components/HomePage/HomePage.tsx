@@ -6,15 +6,12 @@
 // import sample6 from "assets/images/sample6.jpg";
 import swipe from "assets/images/swipe.jpg";
 // const samples = [sample5, sample1, sample2, sample6, sample3, sample4, sample5];
-import { BsArrowRightShort } from "react-icons/bs";
-import { FaMedal } from "react-icons/fa";
 
-import { useGames } from "hooks/useGames/useGames";
+import { FaMedal } from "react-icons/fa";
+import { PlayGameButton } from "components/PlayGameButton/PlayGameButton";
 import { Categories } from "./Categories";
 
 export const HomePage = () => {
-  const { start, isLoadingNewGame } = useGames();
-
   return (
     <main>
       <section className="my-5">
@@ -28,27 +25,11 @@ export const HomePage = () => {
                 taken. Travel through time with every click.
               </p>
               <p className="d-md-flex mt-4 text-center">
-                <button
-                  onClick={start}
+                <PlayGameButton
+                  label="Play The Game"
                   className="btn me-4 my-2 btn-lg btn-primary"
                   style={{ minWidth: 260 }}
-                >
-                  Play The Game
-                  <div
-                    style={{ width: 28, height: 28, display: "inline-block" }}
-                  >
-                    {isLoadingNewGame && (
-                      <div
-                        className="spinner-border spinner-border-sm ms-1 my-1"
-                        role="status"
-                      >
-                        <span className="sr-only d-none">Loading...</span>
-                      </div>
-                    )}
-                    {!isLoadingNewGame && <BsArrowRightShort size={"2em"} />}
-                  </div>
-                </button>
-
+                />
                 <a
                   href="#helo"
                   className="btn  me-4 my-2 btn-lg btn-secondary"

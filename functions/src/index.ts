@@ -6,8 +6,8 @@ import ShortUniqueId from "short-unique-id";
 admin.initializeApp();
 const createGamelimiter = FirebaseFunctionsRateLimiter.withFirestoreBackend(
   {
-    name: "create_game",
-    maxCalls: 5,
+    name: "rate_limit_create_game_action",
+    maxCalls: 3,
     periodSeconds: 60,
   },
   admin.firestore()
@@ -17,6 +17,10 @@ const uid = new ShortUniqueId({
   dictionary: "bcdfghjkmprstwxyz".split(""),
   length: 7,
 });
+
+type FirebaseQuerable =
+  | FirebaseFirestore.Query
+  | admin.firestore.CollectionReference;
 
 export const createGame = functions.https.onCall(async (data, context) => {
   if (!context.auth || !context.auth.uid) {
@@ -28,12 +32,17 @@ export const createGame = functions.https.onCall(async (data, context) => {
 
   await createGamelimiter.rejectOnQuotaExceededOrRecordUsage(context.auth.uid);
 
+  let collection: FirebaseQuerable = admin.firestore().collection("photos");
+
+  if (data?.subject)
+    collection = collection.where("subjects", "array-contains", data?.subject);
+
   const photos = await Promise.all([
-    getRandomPhoto(),
-    getRandomPhoto(),
-    getRandomPhoto(),
-    getRandomPhoto(),
-    getRandomPhoto(),
+    getRandomDocumentFromCollection(collection),
+    getRandomDocumentFromCollection(collection),
+    getRandomDocumentFromCollection(collection),
+    getRandomDocumentFromCollection(collection),
+    getRandomDocumentFromCollection(collection),
   ]);
 
   let id;
@@ -57,15 +66,17 @@ export const createGame = functions.https.onCall(async (data, context) => {
   };
 });
 
-const getRandomPhoto = async () => {
+const getRandomDocumentFromCollection = async (
+  collection: FirebaseQuerable
+) => {
   const uid = generateRandomId();
-  console.log("UID", uid);
-  const photosCollection = admin.firestore().collection("photos");
-  const randomQueryRef = await photosCollection
+
+  const query = await collection
     .where("__name__", ">=", uid)
     .orderBy("__name__")
     .limit(1);
-  const randomQueryData = (await randomQueryRef.get()).docs;
+
+  const randomQueryData = (await query.get()).docs;
   return randomQueryData[0].data();
 };
 

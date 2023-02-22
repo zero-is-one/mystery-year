@@ -20,9 +20,9 @@ export const useGames = () => {
   const { authUser } = useUser();
   const [isLoadingNewGame, setIsLoadingNewGame] = useState(false);
 
-  async function start() {
+  async function start(subject?: string) {
     setIsLoadingNewGame(true);
-    const r: any = await createGame();
+    const r: any = await createGame({ subject });
     navigate(`/${r.data.id}`);
   }
 
